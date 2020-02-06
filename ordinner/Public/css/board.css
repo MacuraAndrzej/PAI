@@ -1,0 +1,45 @@
+.logo{
+    background-color: #76fa88;
+    height: 25%;
+    width: 100%;
+    
+
+}
+.types{
+    background-color: #f7eaa4;
+    padding-left: 3%;
+    float: left;
+    height: 75%;
+    width: 25%;
+    
+
+}
+.menu{
+    float: left;
+    background-color: 	#808080;
+    height: 75%;
+    width: 50%;
+    padding-top: 5%;
+    padding: 2em;
+    display: flex;
+    flex-wrap:wrap ;
+    
+}
+.order{
+    background-color: #fa7676;
+    float: left;
+    height: 75%;
+    width: 25%;
+    padding-left: 3%;
+
+}
+img{
+    width: 10em;
+    height: 10em;
+}
+
+@media only screen and (max-device-width: 992px){
+    .board{
+        grid-template-columns: 1fr;
+    }
+}
