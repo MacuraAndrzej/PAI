@@ -18,4 +18,9 @@ class AdminController extends AppController {
         $users = $userRepository->getUsers();
         echo $users ? json_encode($users) : '';
     }
+    public function createUser(string $email,string $pass,string $role)
+    {
+        $userRepository = new UserRepository();
+        $userRepository->createUser($email,$pass,$role);
+    }
 }
