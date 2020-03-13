@@ -37,7 +37,7 @@ class TypeRepository extends Repository {
         foreach ($Types as $Type) {
             $result[] = new Type(
             $Type['image'],
-            $Type['FOOD_NAME'],
+            $Type['TYPE_NAME'],
             $Type['ID'],
          );
      }

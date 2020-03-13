@@ -1,6 +1,5 @@
 
 var table = [];
-var orderId = -1;
 var foodList;
 const apiUrl = "http://localhost/ordinner";
 
@@ -73,6 +72,18 @@ function showOrder()
      `);
 
 }
+function order()
+{ 
+    setTimeout(() => {
+
+        table.forEach(el=>{
+        insertOrder(el[2],el[3])
+    })
+        
+    }, 1000);
+    
+
+}
 
 function addToOrder(food ) {
     food = food.split(";")
@@ -102,24 +113,8 @@ function printItem(element)
  </td>
  </tr>`
 }
-function order()
-{ 
-    if(orderId < 0)
-    {
-        alert("i am in")
-    orderId = getOrderID();
-    }
-    setTimeout(() => {
 
-        table.forEach(el=>{
-        insertOrder(el[2],el[3],orderId)
-    })
-        
-    }, 1000);
-    
-
-}
-function insertOrder(foodId,count,orderID) {
+function insertOrder(foodId,count) {
 
  $.ajax({
  url : apiUrl + '/?page=order',
@@ -127,20 +122,8 @@ function insertOrder(foodId,count,orderID) {
  data : {
     foodId : foodId,
     count : count,
-    orderId : orderId
  }
  });
-}
- function getOrderID() {
- $.ajax({
- url : apiUrl + '/?page=orderId',
- dataType : 'json'
- })
- .done((res) => {
-    orderId = res;
-    return orderId;
-    
-    });
 }
 function getFoods(typeId) {
  $.ajax({

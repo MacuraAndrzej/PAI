@@ -12,7 +12,7 @@ class SecurityController extends AppController {
 
         if ($this->isPost()) {
             $email = $_POST['email'];
-            $password = $_POST['password'];
+            $password =  password_hash($_POST['password'],PASSWORD_DEFAULT);
 
             $user = $userRepository->getUser($email);
 
@@ -26,7 +26,7 @@ class SecurityController extends AppController {
                 return;
             }
 
-            $_SESSION["id"] = $user->getEmail();
+            $_SESSION["id"] = $user->getId();
             $_SESSION["role"] = $user->getRole();
 
             $url = "http://$_SERVER[HTTP_HOST]/";

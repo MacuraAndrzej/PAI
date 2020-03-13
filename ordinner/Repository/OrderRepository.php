@@ -2,41 +2,52 @@
 
 require_once "Repository.php";
 require_once __DIR__.'//..//Models//Food.php';
+require_once __DIR__.'//..//Models//Order.php';
 class OrderRepository extends Repository {
 
-public function insertOrder(int $foodId,int $count,int $orderid) 
+public function insertOrder(int $foodId,int $count) 
 {
+    $userId = $_SESSION["id"];
     $stmt = $this->database->connect()->prepare('
-    INSERT INTO `food_order`(`ID`, `foodID`, `quantity`, `ORDERID`) VALUES (NULL,:foodId,:count,:orderid)
+    INSERT INTO `food_order`(`ID`, `foodID`, `quantity`, `USER_ID`,`STATUS`) VALUES (NULL,:foodId,:count,:userId,"ORDERED")
     ');
     $stmt->bindParam(':foodId', $foodId, PDO::PARAM_STR);
     $stmt->bindParam(':count', $count, PDO::PARAM_STR);
-    $stmt->bindParam(':orderid', $orderid, PDO::PARAM_STR);
+    $stmt->bindParam(':userId', $userId, PDO::PARAM_STR);
     $stmt->execute();
 
 
        
 }
-public function newOrder() 
+public function getOrders()
 {
     $stmt = $this->database->connect()->prepare('
-    INSERT INTO `full_order`(`ID`, `Date`, `Status`) VALUES (NULL,:date,"not_used")
-    ');
-    $date = date('Y-m-d H:i:s');
-    $stmt->bindParam(':date', $date, PDO::PARAM_STR);
-    $stmt->execute();
-    $stmt = $this->database->connect()->prepare('
-            SELECT * FROM full_order WHERE Status = "not_used"
-        ');
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
-    $ID = $result['ID'];
-    $stmt = $this->database->connect()->prepare('
-    UPDATE full_order SET Status= "ordered" WHERE Status = "not_used"
+    SELECT * FROM `food_order` f,`food` WHERE STATUS = "ORDERED" and f.foodID = food.ID
     ');
     $stmt->execute();
-    return $ID;
+    $Orders = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-       
+    foreach ($Orders as $Order) {
+           $result[] = new Order(
+           $Order['ID'],
+           $Order['NAME'],
+           $Order['quantity'],
+           $Order['USER_ID'],
+           $Order['STATUS'],
+        );
+    }
+
+   return $result;
+
 }
+public function readyOrder(int $orderId)
+{
+    $stmt = $this->database->connect()->prepare('
+    UPDATE `food_order` SET `STATUS`="ready" WHERE foodid=:orderId
+    ');
+    $stmt->bindParam(':orderId', $orderId, PDO::PARAM_STR);
+    $stmt->execute();
+   
+}
+
 }

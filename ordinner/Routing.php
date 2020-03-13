@@ -3,7 +3,9 @@
 require_once 'Controllers//BoardController.php';
 require_once 'Controllers//SecurityController.php';
 require_once 'Controllers//OrderControler.php';
-
+require_once 'Controllers//KitchenController.php';
+require_once 'Controllers//MenuController.php';
+require_once 'Controllers//AdminController.php';
 class Routing {
     private $routes = [];
 
@@ -30,9 +32,29 @@ class Routing {
                 'controller' => 'OrderControler',
                 'action' => 'insertOrder'
             ],
-            'orderId' => [
+            'orders' => [
                 'controller' => 'OrderControler',
-                'action' => 'getOrderID'
+                'action' => 'getOrders'
+            ],
+            'ready' => [
+                'controller' => 'OrderControler',
+                'action' => 'readyOrder'
+            ],
+            'kitchen' => [
+                'controller' => 'KitchenController',
+                'action' => 'kitchen'
+            ],
+            'menu' => [
+                'controller' => 'menuController',
+                'action' => 'menu'
+            ],
+            'admin' => [
+                'controller' => 'AdminController',
+                'action' => 'admin'
+            ],
+            'users' => [
+                'controller' => 'AdminController',
+                'action' => 'users'
             ]
         ];
     }

@@ -11,10 +11,9 @@ class OrderControler extends AppController {
     public function insertOrder()
     {   
         $foodId = (int)$_POST['foodId'];
-        $orderId = (int)$_POST['orderId'];
         $count = (int)$_POST['count'];
         $repo = new OrderRepository();
-        $repo->insertOrder($foodId,$count,$orderId);
+        $repo->insertOrder($foodId,$count);
 
 
     }
@@ -38,5 +37,23 @@ class OrderControler extends AppController {
         
         $food = $foodRepository->getFoods($typeId);
         echo $food ? json_encode($food) : '';
+    }
+    public function getOrders()
+    {
+        $orderRepository = new OrderRepository();
+        
+        header('Content-type: application/json');
+        http_response_code(200);
+        
+        $orders = $orderRepository->getOrders();
+        echo $orders ? json_encode($orders) : '';
+
+    }
+    public function readyOrder()
+    {
+        $orderId = (int)$_POST["orderId"];
+        $repo = new OrderRepository();
+        $repo->readyOrder($orderId);
+
     }
 }

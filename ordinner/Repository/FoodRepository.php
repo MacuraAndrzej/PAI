@@ -29,7 +29,7 @@ class FoodRepository extends Repository {
     public function getFoods(int $typeId): array {
          $result = [];
         $stmt = $this->database->connect()->prepare('
-        SELECT * FROM `FOOD` WHERE  FOOD.FOOD_TYPE = :typeId
+        SELECT * FROM `FOOD` WHERE  FOOD.TYPE_ID = :typeId
         ');
         $stmt->bindParam(':typeId', $typeId, PDO::PARAM_STR);
         $stmt->execute();

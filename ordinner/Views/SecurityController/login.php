@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="container">
-    <form action="?page=login" method="POST">
+    <form action="?page=menu" method="POST">
         <div class="messages">
             <?php
                 if(isset($messages)){
